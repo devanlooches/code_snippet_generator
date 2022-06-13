@@ -1,7 +1,11 @@
 [package]
 name = "code_snippet_generator"
+authors = ["Devan Looches <devan.looches@gmail.com>"]
 version = "0.1.0"
 edition = "2021"
+license = "MIT"
+description = "A proc_macro for turning a snippet of code into colorized html."
+keywords = ["html", "code-snippet", "syntax-highlighting", "web"]
 
 [lib]
 proc-macro = true
