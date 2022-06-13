@@ -6,6 +6,8 @@ edition = "2021"
 license = "MIT"
 description = "A proc_macro for turning a snippet of code into colorized html."
 keywords = ["html", "code-snippet", "syntax-highlighting", "web"]
+categories = ["proc-macro"]
+repository = "https://github.com/devanlooches/code_snippet_generator"
 
 [lib]
 proc-macro = true
