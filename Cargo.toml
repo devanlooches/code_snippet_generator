@@ -8,6 +8,7 @@ description = "A proc_macro for turning a snippet of code into colorized html."
 keywords = ["html", "code-snippet", "syntax-highlighting", "web"]
 repository = "https://github.com/devanlooches/code_snippet_generator"
 documentation = "https://docs.rs/code_snippet_generator/0.1.1/code_snippet_generator/"
+include = ["src/lib.rs", "LICENSE", "README.md"]
 
 [lib]
 proc-macro = true
