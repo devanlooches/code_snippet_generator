@@ -2,6 +2,7 @@ extern crate proc_macro;
 use proc_macro::TokenStream;
 
 use quote::quote;
+// use rust_format::{Formatter, RustFmt};
 use rustfmt_wrapper::rustfmt;
 use synoptic::languages::rust;
 use synoptic::Token;
@@ -36,6 +37,8 @@ use synoptic::Token;
 /// Panics at compile time if code is invalid.
 #[proc_macro]
 pub fn generate_snippet(item: TokenStream) -> TokenStream {
+    // let code = RustFmt::default().format_tokens(item.into()).unwrap();
+
     let code = rustfmt(item).unwrap();
     let mut result = String::from(
         r#"<div style="background: #181818; overflow:auto;width:auto;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">"#,
@@ -43,13 +46,9 @@ pub fn generate_snippet(item: TokenStream) -> TokenStream {
     let rust = rust();
     let highlighting = rust.run(code.trim());
     for (c, row) in highlighting.iter().enumerate() {
-        // Print line number (with padding)
         result.push_str(format!("{: >2} ", c).as_str());
-        // For each token within each row
         for tok in row {
-            // Handle the tokens
             match tok {
-                // Handle the start token (start foreground colour)
                 Token::Start(kind) => {
                     result.push_str("<span style=\"");
                     match kind.as_str() {
@@ -61,13 +60,12 @@ pub fn generate_snippet(item: TokenStream) -> TokenStream {
                         "string" | "character" => result.push_str("color: #a1b56c;\">"),
                         "function" | "macro" => result.push_str("color: #7cafc2;\">"),
                         "regex" | "symbol" => result.push_str("color: #86c1b9;\">"),
+                        "namespace" => result.push_str("color: #f78c6c;\">"),
                         token => println!("unknow token: {}", token),
                     }
                 }
 
-                // Handle a text token (print out the contents)
                 Token::Text(txt) => result.push_str(txt),
-                // Handle an end token (reset foreground colour)
                 Token::End(_) => result.push_str("</span>"),
             }
         }
